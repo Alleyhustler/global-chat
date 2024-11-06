@@ -40,27 +40,38 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        console.log("Firebase initialized successfully");
         const db = firebase.database();
+        console.log(db);  // This should log the Firebase Database reference
+
 
         // Function to send a message
         function sendMessage() {
             const messageInput = document.getElementById('message-input');
             const message = messageInput.value.trim();
             if (message) {
-                db.ref('messages').push({ text: message });
-                messageInput.value = '';
+                console.log("Sending message: ", message);  // Log message
+                db.ref('messages').push({ text: message }).then(() => {
+                    console.log("Message sent to Firebase successfully");
+                }).catch((error) => {
+                    console.log("Error sending message: ", error);  // Log any errors
+                });
+                messageInput.value = '';  // Clear input field
             }
         }
+
 
         // Function to display messages
         db.ref('messages').on('child_added', (snapshot) => {
             const message = snapshot.val().text;
+            console.log("Received message: ", message);  // Log message
             const messageContainer = document.getElementById('message-container');
             const messageElement = document.createElement('li');
             messageElement.innerText = message;
             messageContainer.appendChild(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
         });
+
     </script>
 
 </body>
