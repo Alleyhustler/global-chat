@@ -29,22 +29,24 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>    
 
     <script>
+        console.log("Script Loaded!");  // Check if the script is being executed.
+    
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDU6sIdWxo_-V_AieIT1hOnqJ-7ndFi2jU",
             authDomain: "globalchat-fe815.firebaseapp.com",
             databaseURL: "https://globalchat-fe815-default-rtdb.firebaseio.com/",
             projectId: "globalchat-fe815",
-            storageBucket: "globalchat-fe815.firebasestorage.app", // Corrected URL format
+            storageBucket: "globalchat-fe815.appspot.com", // Corrected URL format
         };
-
+    
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        console.log("Firebase initialized successfully");
+        console.log("Firebase initialized successfully");  // This should show up in the console.
+        
         const db = firebase.database();
         console.log(db);  // This should log the Firebase Database reference
-
-
+    
         // Function to send a message
         function sendMessage() {
             const messageInput = document.getElementById('message-input');
@@ -59,8 +61,7 @@
                 messageInput.value = '';  // Clear input field
             }
         }
-
-
+    
         // Function to display messages
         db.ref('messages').on('child_added', (snapshot) => {
             const message = snapshot.val().text;
@@ -71,8 +72,8 @@
             messageContainer.appendChild(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
         });
-
     </script>
+    
 
 </body>
 </html>
