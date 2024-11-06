@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Chat</title>
+    <title>Elections chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,7 +14,8 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+            background: url('sa.jpg') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,11 +24,12 @@
             overflow: hidden;
         }
 
+
         #chat-container {
             width: 100%;
             max-width: 500px;
             height: 80vh;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgb(0 0 0);
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             display: flex;
@@ -58,7 +60,7 @@
         }
 
         #message-container li {
-            background: rgba(98, 0, 234, 0.1);
+            background: rgb(251 249 255 / 10%);
             padding: 12px 18px;
             margin-bottom: 12px;
             border-radius: 15px;
@@ -109,7 +111,7 @@
         }
 
         #input-container button {
-            background: linear-gradient(135deg, #6200ea, #3700b3);
+            background: linear-gradient(135deg, #1f2958, #5d5caa);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -161,8 +163,8 @@
         #startChatButton {
             padding: 12px 30px;
             font-size: 18px;
-            background: linear-gradient(135deg, #6200ea, #3700b3);
-            color: white;
+            background: linear-gradient(135deg, #ffffff, #ffffff);
+            color: rgb(0, 0, 0);
             border: none;
             border-radius: 25px;
             cursor: pointer;
@@ -173,12 +175,53 @@
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
         }
+
+        #header-container {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+}
+
+#main-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+#subtitle {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 8px;
+}
+
+#twitter-link {
+    font-size: 14px;
+    color: #1da1f2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+#twitter-link:hover {
+    color: #0d8ddf;
+}
+
     </style>
 </head>
 <body>
 
+    <div id="header-container">
+        <h1 id="main-title">Elections Chat - CA HERE</h1>
+        <p id="subtitle">Let's connect and talk about this life changing event</p>
+        <a href="https://twitter.com/yourprofile" target="_blank" id="twitter-link">@YourTwitter</a>
+    </div>
+    
+
     <div id="chat-container">
-        <div id="chat-title">Global Chat</div>
+        <div id="chat-title">Degens Chat !LIVE</div>
 
         <div id="username-container">
             <input type="text" id="username-input" placeholder="Enter your username">
