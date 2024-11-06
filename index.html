@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Chat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
             display: flex;
             justify-content: center;
@@ -41,7 +41,7 @@
             text-align: center;
             padding: 15px;
             font-size: 26px;
-            font-weight: 700;
+            font-weight: 600;
             background-color: rgba(0, 0, 0, 0.6);
             color: #ffffff;
             border-radius: 20px 20px 0 0;
@@ -59,12 +59,14 @@
 
         #message-container li {
             background: rgba(98, 0, 234, 0.1);
-            padding: 14px 18px;
+            padding: 12px 18px;
             margin-bottom: 12px;
             border-radius: 15px;
             max-width: 75%;
             color: #ffffff;
             font-size: 15px;
+            display: flex;
+            flex-direction: column;
             position: relative;
             animation: slideIn 0.4s ease-out;
         }
@@ -74,10 +76,11 @@
             margin-left: auto;
         }
 
-        .message-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .message-username {
+            color: #82b1ff;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
         }
 
         #input-container {
@@ -183,7 +186,7 @@
         </div>
 
         <ul id="message-container"></ul>
-        
+
         <div id="input-container">
             <input type="text" id="message-input" placeholder="Type your message..." onkeydown="sendMessageOnEnter(event)">
             <button type="button" id="sendButton">Send</button>
@@ -230,16 +233,12 @@
                 push(ref(db, 'messages'), {
                     text: message,
                     username: username
-                }).then(() => {
-                    console.log("Message sent to Firebase successfully");
-                }).catch((error) => {
-                    console.log("Error sending message: ", error);
                 });
                 messageInput.value = '';  // Clear input field
             }
         }
 
-        // Send message when Enter key is pressed
+        // Send message on pressing "Enter"
         function sendMessageOnEnter(event) {
             if (event.key === 'Enter') {
                 sendMessage();
@@ -252,15 +251,20 @@
         // Function to display messages
         onChildAdded(ref(db, 'messages'), (snapshot) => {
             const messageData = snapshot.val();
-            const message = messageData.text;
-            const username = messageData.username;
             const messageContainer = document.getElementById('message-container');
             const messageElement = document.createElement('li');
             messageElement.classList.add('message-content');
-            messageElement.innerHTML = `
-                <span>${username}:</span>
-                <span>${message}</span>
-            `;
+
+            const usernameSpan = document.createElement('span');
+            usernameSpan.classList.add('message-username');
+            usernameSpan.innerText = messageData.username + ':';
+
+            const messageText = document.createElement('span');
+            messageText.innerText = messageData.text;
+
+            messageElement.appendChild(usernameSpan);
+            messageElement.appendChild(messageText);
+
             messageContainer.appendChild(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
         });
