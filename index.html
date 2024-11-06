@@ -20,52 +20,57 @@
         <ul id="message-container"></ul>
         <div id="input-container">
             <input type="text" id="message-input" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send</button>
+            <button type="button" id="sendButton">Send</button>
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>    
+    <!-- Firebase SDK v9 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    <script>
-        console.log("Script Loaded!");  // Check if the script is being executed.
-    
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDU6sIdWxo_-V_AieIT1hOnqJ-7ndFi2jU",
             authDomain: "globalchat-fe815.firebaseapp.com",
             databaseURL: "https://globalchat-fe815-default-rtdb.firebaseio.com/",
             projectId: "globalchat-fe815",
-            storageBucket: "globalchat-fe815.appspot.com", // Corrected URL format
+            storageBucket: "globalchat-fe815.firebasestorage.app",
+            messagingSenderId: "881221615921",
+            appId: "1:881221615921:web:85e13ed8d255e11b1cb010",
+            measurementId: "G-C1ETWL985C"
         };
-    
+
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        console.log("Firebase initialized successfully");  // This should show up in the console.
-        
-        const db = firebase.database();
-        console.log(db);  // This should log the Firebase Database reference
-    
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        console.log("Firebase initialized successfully");
+
         // Function to send a message
         function sendMessage() {
             const messageInput = document.getElementById('message-input');
             const message = messageInput.value.trim();
             if (message) {
-                console.log("Sending message: ", message);  // Log message
-                db.ref('messages').push({ text: message }).then(() => {
+                console.log("Sending message: ", message);
+                // Push message to Firebase Realtime Database
+                push(ref(db, 'messages'), {
+                    text: message
+                }).then(() => {
                     console.log("Message sent to Firebase successfully");
                 }).catch((error) => {
-                    console.log("Error sending message: ", error);  // Log any errors
+                    console.log("Error sending message: ", error);
                 });
                 messageInput.value = '';  // Clear input field
             }
         }
-    
+
+        // Attach event listener to the send button
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+
         // Function to display messages
-        db.ref('messages').on('child_added', (snapshot) => {
+        onChildAdded(ref(db, 'messages'), (snapshot) => {
             const message = snapshot.val().text;
-            console.log("Received message: ", message);  // Log message
+            console.log("Received message: ", message);  // Log message received from Firebase
             const messageContainer = document.getElementById('message-container');
             const messageElement = document.createElement('li');
             messageElement.innerText = message;
@@ -73,7 +78,6 @@
             messageContainer.scrollTop = messageContainer.scrollHeight;
         });
     </script>
-    
 
 </body>
 </html>
