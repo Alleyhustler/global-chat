@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elections chat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Degens console</title>
     <style>
         * {
             margin: 0;
@@ -13,226 +12,190 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: url('sa.jpg') no-repeat center center fixed;
-            background-size: cover;
+            font-family: monospace, sans-serif;
+            background-color: #000000;
+            color: #00ff00;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            padding: 20px;
             overflow: hidden;
         }
-
 
         #chat-container {
             width: 100%;
-            max-width: 500px;
-            height: 80vh;
-            background: rgb(0 0 0);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            max-width: 1000px;
+            height: 90vh;
+            background-color: #111111;
+            border: 2px solid #00ff00;
+            padding: 15px;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(12px);
-            overflow: hidden;
-            position: relative;
         }
 
-        #chat-title {
-            text-align: center;
-            padding: 15px;
-            font-size: 26px;
-            font-weight: 600;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #ffffff;
-            border-radius: 20px 20px 0 0;
-            box-shadow: inset 0 -1px 10px rgba(255, 255, 255, 0.1);
+        #header-container {
+            margin-bottom: 15px;
+            text-align: left;
         }
 
-        #message-container {
-            list-style: none;
-            padding: 20px;
-            overflow-y: auto;
-            flex-grow: 1;
-            background-color: rgba(255, 255, 255, 0.05);
+        #main-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        #subtitle {
+            font-size: 14px;
+            color: #1fda9a;
+            margin-top: 5px;
             margin-bottom: 10px;
         }
 
-        #message-container li {
-            background: rgb(251 249 255 / 10%);
-            padding: 12px 18px;
-            margin-bottom: 12px;
-            border-radius: 15px;
-            max-width: 75%;
-            color: #ffffff;
-            font-size: 15px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            animation: slideIn 0.4s ease-out;
-        }
-
-        #message-container li.sent {
-            background: rgba(98, 0, 234, 0.8);
-            margin-left: auto;
-        }
-
-        .message-username {
-            color: #82b1ff;
-            font-weight: 600;
-            margin-bottom: 4px;
+        #twitter-link {
             font-size: 14px;
+            color: #1da1f2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        #twitter-link:hover {
+            color: #0d8ddf;
+        }
+
+        #chat-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 5px;
+        }
+
+        #message-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #000000;
+            border: 1px solid #00ff00;
+        }
+
+        #message-container li {
+            list-style: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        /* Styling for messages */
+        #message-container li .message-username {
+            font-weight: bold;
+            color: #1fda9a; /* A light green color for usernames */
+            display: block;
+        }
+
+        #message-container li .message-text {
+            color: #00ff00;
+        }
+
+        #message-container li.sent .message-username {
+            color: #ffff00; /* Yellow for current user */
+        }
+
+        #message-container li.sent .message-text {
+            color: #00ffff; /* Cyan for sent messages */
         }
 
         #input-container {
             display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 0 0 20px 20px;
+            gap: 10px;
         }
 
         #input-container input {
             flex-grow: 1;
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 25px;
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            margin-right: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        #input-container input:focus {
-            background-color: rgba(98, 0, 234, 0.2);
+            padding: 10px;
+            border: 1px solid #00ff00;
+            background-color: #000000;
+            color: #00ff00;
+            font-family: monospace;
         }
 
         #input-container button {
-            background: linear-gradient(135deg, #1f2958, #5d5caa);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border: 1px solid #00ff00;
+            background-color: #000000;
+            color: #00ff00;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         #input-container button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            background-color: #00ff00;
+            color: #000000;
         }
 
         #username-container {
             text-align: center;
-            margin: 15px 0;
+            margin-bottom: 20px;
         }
 
         #username-container input {
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 25px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            width: 80%;
-            text-align: center;
-            outline: none;
-            margin-bottom: 10px;
-            transition: background-color 0.3s ease;
+            padding: 8px;
+            border: 1px solid #00ff00;
+            background-color: #000000;
+            color: #00ff00;
+            font-family: monospace;
         }
 
-        #username-container input:focus {
-            background-color: rgba(98, 0, 234, 0.2);
-        }
-
-        #startChatButton {
-            padding: 12px 30px;
-            font-size: 18px;
-            background: linear-gradient(135deg, #ffffff, #ffffff);
-            color: rgb(0, 0, 0);
-            border: none;
-            border-radius: 25px;
+        #username-container button {
+            padding: 8px 15px;
+            border: 1px solid #00ff00;
+            background-color: #000000;
+            color: #00ff00;
+            font-family: monospace;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        #startChatButton:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(98, 0, 234, 0.3);
+        #username-container button:hover {
+            background-color: #00ff00;
+            color: #000000;
         }
 
-        #header-container {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    text-align: left;
-}
+        /* Scrollbar for terminal */
+        #message-container::-webkit-scrollbar {
+            width: 8px;
+        }
 
-#main-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
+        #message-container::-webkit-scrollbar-thumb {
+            background: #00ff00;
+        }
 
-#subtitle {
-    font-size: 14px;
-    color: #ddd;
-    margin-bottom: 8px;
-}
-
-#twitter-link {
-    font-size: 14px;
-    color: #1da1f2;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-
-#twitter-link:hover {
-    color: #0d8ddf;
-}
-
+        #message-container::-webkit-scrollbar-track {
+            background: #111111;
+        }
     </style>
 </head>
 <body>
 
-    <div id="header-container">
-        <h1 id="main-title">Elections Chat - CA HERE</h1>
-        <p id="subtitle">Let's connect and talk about this life changing event</p>
-        <a href="https://x.com/elections_chat_" target="_blank" id="twitter-link">@elections_chat</a>
-    </div>
-    
-
     <div id="chat-container">
-        <div id="chat-title">Degens Chat !LIVE</div>
+        <div id="header-container">
+            <h1 id="main-title">Degens console - Live Chat - CA HERE</h1>
+            <p id="subtitle">Let's connect and talk about this life.</p>
+            <a href="https://x.com/elections_chat_" target="_blank" id="twitter-link">@elections_chat</a>
+        </div>
+
+        <div id="chat-title">Terminal Chat Interface</div>
 
         <div id="username-container">
             <input type="text" id="username-input" placeholder="Enter your username">
-            <button id="startChatButton">Start Chat</button>
+            <button id="startChatButton">Login</button>
         </div>
 
         <ul id="message-container"></ul>
 
         <div id="input-container">
-            <input type="text" id="message-input" placeholder="Type your message..." onkeydown="sendMessageOnEnter(event)">
-            <button type="button" id="sendButton">Send</button>
+            <input type="text" id="message-input" placeholder="Type a command or message...">
+            <button id="sendButton">Send</button>
         </div>
     </div>
 
@@ -258,17 +221,17 @@
 
         let username = '';
 
-        // Function to set username and start chat
+        // Set username
         document.getElementById('startChatButton').addEventListener('click', () => {
             username = document.getElementById('username-input').value.trim();
             if (username) {
                 document.getElementById('username-container').style.display = 'none';
-                document.getElementById('chat-title').innerText = `Welcome, ${username}`;
+                document.getElementById('chat-title').innerText = `User: ${username}`;
                 document.getElementById('message-input').focus();
             }
         });
 
-        // Function to send a message
+        // Send message
         function sendMessage() {
             const messageInput = document.getElementById('message-input');
             const message = messageInput.value.trim();
@@ -277,36 +240,40 @@
                     text: message,
                     username: username
                 });
-                messageInput.value = '';  // Clear input field
+                messageInput.value = '';
             }
         }
 
-        // Send message on pressing "Enter"
-        function sendMessageOnEnter(event) {
+        // Handle Enter key
+        document.getElementById('message-input').addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 sendMessage();
             }
-        }
+        });
 
-        // Attach event listener to the send button
+        // Send button
         document.getElementById('sendButton').addEventListener('click', sendMessage);
 
-        // Function to display messages
+        // Display messages
         onChildAdded(ref(db, 'messages'), (snapshot) => {
             const messageData = snapshot.val();
             const messageContainer = document.getElementById('message-container');
             const messageElement = document.createElement('li');
-            messageElement.classList.add('message-content');
 
             const usernameSpan = document.createElement('span');
             usernameSpan.classList.add('message-username');
-            usernameSpan.innerText = messageData.username + ':';
+            usernameSpan.innerText = messageData.username;
 
             const messageText = document.createElement('span');
-            messageText.innerText = messageData.text;
+            messageText.classList.add('message-text');
+            messageText.innerText = `: ${messageData.text}`;
 
             messageElement.appendChild(usernameSpan);
             messageElement.appendChild(messageText);
+
+            if (messageData.username === username) {
+                messageElement.classList.add('sent');
+            }
 
             messageContainer.appendChild(messageElement);
             messageContainer.scrollTop = messageContainer.scrollHeight;
