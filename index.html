@@ -32,6 +32,29 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative; /* Add relative positioning for the logo */
+        }
+
+        #logo {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 100px; /* Adjust the size of the logo */
+            height: 100px;
+            animation: rotateLogo 5s linear infinite; /* 3D rotation animation */
+        }
+
+        /* 3D rotation animation */
+        @keyframes rotateLogo {
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(180deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
         }
 
         #header-container {
@@ -178,6 +201,8 @@
 <body>
 
     <div id="chat-container">
+        <img src="d-removebg-preview.png" alt="Logo" id="logo"> <!-- Replace 'your-logo-path.png' with your actual logo path -->
+
         <div id="header-container">
             <h1 id="main-title">Degens console - Live Chat - CA HERE</h1>
             <p id="subtitle">Let's connect and talk about this life.</p>
